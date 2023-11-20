@@ -1,22 +1,34 @@
 function validateForm() {
-    // Get form inputs
-    var nameInput = document.getElementById('name');
-    var emailInput = document.getElementById('email');
-    var passwordInput = document.getElementById('password');
-    var dobInput = document.getElementById('dob');
+  // Your existing date validation code
+  // ...
 
-    // Validate Date of Birth
-    var dobValue = new Date(dobInput.value);
-    var currentDate = new Date();
-    var age = currentDate.getFullYear() - dobValue.getFullYear();
+  // Validate email
+  var emailInput = document.getElementById("email");
+  var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(emailInput.value)) {
+    alert("Please enter a valid email address.");
+    return false; // Prevent form submission
+  }
 
-    if (age < 18 || age > 55) {
-        alert('Please enter a valid date of birth between ages 18 and 55.');
-        return false; // Prevent form submission
-    }
+  // Other validations if needed...
 
-    // You can add additional validations for name, email, and password as needed
+  // If all validations pass, continue with form submission
+  updateTable();
+  return true;
+}
 
-    // If all validations pass, continue with form submission
-    return true;
+function updateTable() {
+  var name = document.getElementById("name").value;
+  var email = document.getElementById("email").value;
+  var password = document.getElementById("password").value;
+  var dob = document.getElementById("dob").value;
+  var acceptTerms = document.getElementById("acceptTerms").checked;
+
+  var tableBody = document.getElementById("entriesTableBody");
+  var newRow = tableBody.insertRow(tableBody.rows.length);
+  newRow.insertCell(0).textContent = name;
+  newRow.insertCell(1).textContent = email;
+  newRow.insertCell(2).textContent = password;
+  newRow.insertCell(3).textContent = dob;
+  newRow.insertCell(4).textContent = acceptTerms ? "Yes" : "No";
 }
