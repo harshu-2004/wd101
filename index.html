@@ -1,32 +1,32 @@
-<form id="registrationForm">
-    <!-- Other form fields -->
-  
-    <label for="dob">Date of Birth:</label>
-    <input type="date" id="dob" name="dob" required>
-  
-    <!-- Other form fields -->
-  
-    <button type="submit">Submit</button>
-  </form>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+</head>
+<body>
+    <form id="registrationForm" onsubmit="return validateForm()">
+        <!-- Name -->
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+    
+        <!-- Email -->
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+    
+        <!-- Password -->
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+    
+        <!-- Date of Birth -->
+        <label for="dob">Date of Birth:</label>
+        <input type="date" id="dob" name="dob" required>
+    
+        <!-- Submit Button -->
+        <button type="submit">Submit</button>
+    </form>
 
-  <script>
-    function validateForm() {
-      // Get the date of birth input value
-      var dobInput = document.getElementById('dob');
-      var dobValue = new Date(dobInput.value);
-    
-      // Calculate age
-      var currentDate = new Date();
-      var age = currentDate.getFullYear() - dobValue.getFullYear();
-    
-      // Check if age is between 18 and 55
-      if (age < 18 || age > 55) {
-        alert('Please enter a valid date of birth between ages 18 and 55.');
-        return false; // Prevent form submission
-      }
-    
-      // If the age is valid, continue with form submission
-      return true;
-    }
-    </script>
-    
+    <script src="index.js"></script>
+</body>
+</html>
