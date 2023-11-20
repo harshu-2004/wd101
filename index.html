@@ -1,10 +1,32 @@
 <form id="registrationForm">
-  <!-- Other form fields -->
+    <!-- Other form fields -->
+  
+    <label for="dob">Date of Birth:</label>
+    <input type="date" id="dob" name="dob" required>
+  
+    <!-- Other form fields -->
+  
+    <button type="submit">Submit</button>
+  </form>
 
-  <label for="dob">Date of Birth:</label>
-  <input type="date" id="dob" name="dob" required>
-
-  <!-- Other form fields -->
-
-  <button type="submit">Submit</button>
-</form>
+  <script>
+    function validateForm() {
+      // Get the date of birth input value
+      var dobInput = document.getElementById('dob');
+      var dobValue = new Date(dobInput.value);
+    
+      // Calculate age
+      var currentDate = new Date();
+      var age = currentDate.getFullYear() - dobValue.getFullYear();
+    
+      // Check if age is between 18 and 55
+      if (age < 18 || age > 55) {
+        alert('Please enter a valid date of birth between ages 18 and 55.');
+        return false; // Prevent form submission
+      }
+    
+      // If the age is valid, continue with form submission
+      return true;
+    }
+    </script>
+    
