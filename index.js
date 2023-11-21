@@ -1,34 +1,66 @@
-function validateForm() {
-  // Your existing date validation code
-  // ...
+function validateDateOfBirth() {
+  var dobInput = document.getElementById("dob");
+  var dobValue = new Date(dobInput.value);
+  var currentDate = new Date();
+  var minDate = new Date(
+    currentDate.getFullYear() - 55,
+    currentDate.getMonth(),
+    currentDate.getDate()
+  );
+  var maxDate = new Date(
+    currentDate.getFullYear() - 18,
+    currentDate.getMonth(),
+    currentDate.getDate()
+  );
 
-  // Validate email
-  var emailInput = document.getElementById("email");
-  var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailRegex.test(emailInput.value)) {
-    alert("Please enter a valid email address.");
-    return false; // Prevent form submission
+  if (dobValue < minDate || dobValue > maxDate) {
+    alert("Age must be between 18 and 55 years.");
+    dobInput.value = "";
+  } else {
+    alert("Your age is valid.");
   }
-
-  // Other validations if needed...
-
-  // If all validations pass, continue with form submission
-  updateTable();
-  return true;
 }
 
-function updateTable() {
-  var name = document.getElementById("name").value;
-  var email = document.getElementById("email").value;
-  var password = document.getElementById("password").value;
-  var dob = document.getElementById("dob").value;
-  var acceptTerms = document.getElementById("acceptTerms").checked;
+function loadSavedData() {
+  var savedData = JSON.parse(localStorage.getItem("registrationData")) || [];
+  var tableBody = document.getElementById("tableBody");
 
-  var tableBody = document.getElementById("entriesTableBody");
-  var newRow = tableBody.insertRow(tableBody.rows.length);
-  newRow.insertCell(0).textContent = name;
-  newRow.insertCell(1).textContent = email;
-  newRow.insertCell(2).textContent = password;
-  newRow.insertCell(3).textContent = dob;
-  newRow.insertCell(4).textContent = acceptTerms ? "Yes" : "No";
+  tableBody.innerHTML = "";
+
+  savedData.forEach(function (data) {
+    var row = tableBody.insertRow();
+    for (var key in data) {
+      var cell = row.insertCell();
+      cell.textContent = data[key];
+    }
+  });
 }
+
+document
+  .getElementById("registrationForm")
+  .addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    var name = document.getElementById("name").value;
+    var email = document.getElementById("email").value;
+    var password = document.getElementById("password").value;
+    var dob = document.getElementById("dob").value;
+    var acceptTerms = document.getElementById("acceptTerms").checked;
+
+    var formData = {
+      name: name,
+      email: email,
+      password: password,
+      dob: dob,
+      acceptTerms: acceptTerms,
+    };
+
+    var savedData = JSON.parse(localStorage.getItem("registrationData")) || [];
+    savedData.push(formData);
+    localStorage.setItem("registrationData", JSON.stringify(savedData));
+
+    loadSavedData();
+
+    validateDateOfBirth();
+  });
+window.onload = loadSavedData;
